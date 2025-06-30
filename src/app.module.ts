@@ -1,12 +1,25 @@
 import { Module } from '@nestjs/common';
 import { PokemonModule } from './modules/pokemon/pokemon.module';
 import { DigimonModule } from './modules/digimon/digimon.module';
-import { StorageController } from './infrastructure/controllers/storage.controller';
-import { InMemoryStorageAdapter } from './infrastructure/adapters/storage.adapter';
+import { StorageController } from './apps/storage/storage.controller';
+import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { StorageModule } from './modules/storage/storage.module';
+import configuration from './config/app.config';
 
 @Module({
-  imports: [PokemonModule, DigimonModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+
+    PokemonModule,
+    DigimonModule,
+    DatabaseModule,
+    StorageModule,
+  ],
   controllers: [StorageController],
-  providers: [InMemoryStorageAdapter],
+  providers: [],
 })
 export class AppModule {}

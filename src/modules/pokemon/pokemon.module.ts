@@ -1,12 +1,20 @@
 import { Module } from '@nestjs/common';
-import { PokemonController } from './infrastructure/controllers/pokemon.controller';
 import { PokemonApiAdapter } from './infrastructure/adapters/pokemon-api.adapter';
 import { GetPokemonDataUseCase } from './application/use-cases/get-pokemon-data.usecase';
-import { InMemoryStorageAdapter } from 'src/infrastructure/adapters/storage.adapter';
+import { PokemonController } from 'src/apps/pokemon/pokemon.controller';
+import { StorageModule } from '../storage/storage.module';
 
 @Module({
+  imports: [StorageModule],
   controllers: [PokemonController],
-  providers: [PokemonApiAdapter, GetPokemonDataUseCase, InMemoryStorageAdapter],
+  providers: [
+    {
+      provide: 'PokemonPort',
+      useClass: PokemonApiAdapter,
+    },
+    PokemonApiAdapter,
+    GetPokemonDataUseCase,
+  ],
   exports: [PokemonApiAdapter, GetPokemonDataUseCase],
 })
 export class PokemonModule {}

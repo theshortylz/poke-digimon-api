@@ -8,18 +8,14 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { GetPokemonDataUseCase } from '../../application/use-cases/get-pokemon-data.usecase';
-import { PokemonApiAdapter } from '../adapters/pokemon-api.adapter';
-import { InMemoryStorageAdapter } from '../../../../infrastructure/adapters/storage.adapter';
-import { routesV1 } from '../../../../shared/constants/routes';
-import { CharacterDto } from 'src/domain/dto/character.dto';
+import { CharacterDto } from 'src/modules/common/models/dto/character.dto';
+import { GetPokemonDataUseCase } from 'src/modules/pokemon/application/use-cases/get-pokemon-data.usecase';
+import { routesV1 } from 'src/shared/constants/routes';
 
 @ApiTags(routesV1.api.pokemon.apiTag)
 @Controller(routesV1.api.pokemon.root)
 export class PokemonController {
-  private storageAdapter = new InMemoryStorageAdapter();
-
-  constructor(private readonly pokemonAdapter: PokemonApiAdapter) {}
+  constructor(private readonly getPokemonDataUseCase: GetPokemonDataUseCase) {}
 
   @Get()
   @ApiOperation({
@@ -55,13 +51,10 @@ export class PokemonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    const useCase = new GetPokemonDataUseCase(
-      this.pokemonAdapter,
-      this.storageAdapter,
+    return this.getPokemonDataUseCase.execute(
+      routesV1.version,
+      metadata,
+      config,
     );
-
-    const data = await useCase.execute(routesV1.version, metadata, config);
-
-    return data;
   }
 }

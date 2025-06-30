@@ -1,4 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -7,12 +13,15 @@ import {
 } from '@nestjs/swagger';
 import { ErrorResponseDto } from '../../shared/errors/error-response.dto';
 import { routesV1 } from '../../shared/constants/routes';
-import { InMemoryStorageAdapter } from '../adapters/storage.adapter';
+import { StoragePort } from 'src/modules/storage/domain/ports/storage-port';
 
 @ApiTags(routesV1.api.storage.apiTag)
 @Controller(routesV1.api.storage.root)
 export class StorageController {
-  private storageAdapter = new InMemoryStorageAdapter();
+  constructor(
+    @Inject('StoragePort')
+    private readonly storageAdapter: StoragePort,
+  ) {}
 
   @Get('all')
   @ApiOperation({

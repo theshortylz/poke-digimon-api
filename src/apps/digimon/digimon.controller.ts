@@ -8,18 +8,14 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { GetDigimonDataUseCase } from '../../application/use-cases/get-digimon-data.usecase';
-import { DigimonApiAdapter } from '../adapters/digimon-api.adapter';
-import { InMemoryStorageAdapter } from '../../../../infrastructure/adapters/storage.adapter';
-import { routesV1 } from '../../../../shared/constants/routes';
-import { CharacterDto } from 'src/domain/dto/character.dto';
+import { CharacterDto } from 'src/modules/common/models/dto/character.dto';
+import { GetDigimonDataUseCase } from 'src/modules/digimon/application/use-cases/get-digimon-data.usecase';
+import { routesV1 } from 'src/shared/constants/routes';
 
 @ApiTags(routesV1.api.digimon.apiTag)
 @Controller(routesV1.api.digimon.root)
 export class DigimonController {
-  private storageAdapter = new InMemoryStorageAdapter();
-
-  constructor(private readonly digimonAdapter: DigimonApiAdapter) {}
+  constructor(private readonly getDigimonDataUseCase: GetDigimonDataUseCase) {}
 
   @Get()
   @ApiOperation({
@@ -55,13 +51,10 @@ export class DigimonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    const useCase = new GetDigimonDataUseCase(
-      this.digimonAdapter,
-      this.storageAdapter,
+    return this.getDigimonDataUseCase.execute(
+      routesV1.version,
+      metadata,
+      config,
     );
-
-    const data = await useCase.execute(routesV1.version, metadata, config);
-
-    return data;
   }
 }

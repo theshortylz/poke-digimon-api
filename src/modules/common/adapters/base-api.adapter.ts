@@ -1,4 +1,4 @@
-import { InvalidJsonException } from '../../../shared/errors/custom-exceptions';
+import { InvalidJsonException } from 'src/shared/errors/custom-exceptions';
 
 export abstract class BaseApiAdapter {
   protected parseJson(jsonString: string, fieldName: string): any {

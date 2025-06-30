@@ -1,4 +1,4 @@
-import { ApiPort } from '../../../../domain/ports/api-port';
+import { ApiPort } from 'src/modules/common/ports/api-port';
 
 // Puerto específico para Pokémon que extiende la funcionalidad base
 // Usamos extends para ser explícitos sobre la herencia, aunque no agreguemos métodos adicionales

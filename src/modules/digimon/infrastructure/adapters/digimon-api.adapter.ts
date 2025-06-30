@@ -1,46 +1,39 @@
 import { DigimonPort } from '../../domain/ports/digimon-port';
 import axios from 'axios';
-import { CharacterDto } from '../../../../domain/dto/character.dto';
+import { CharacterDto } from '../../../common/models/dto/character.dto';
+import { Franchise } from '../../../../shared/enums/franchise.enum';
 import { ExternalApiException } from 'src/shared/errors/custom-exceptions';
-import { BaseApiAdapter } from '../../../../infrastructure/adapters/common/base-api.adapter';
+import { BaseApiAdapter } from 'src/modules/common/adapters/base-api.adapter';
 
 export class DigimonApiAdapter extends BaseApiAdapter implements DigimonPort {
+  private readonly franchise = Franchise.DIGIMON;
+
   async getData(metadata: string, config: string): Promise<CharacterDto> {
+    const { metadataObj, configObj } = this.parseMetadataAndConfig(
+      metadata,
+      config,
+    );
+
+    const { id } = metadataObj;
+    const { baseUrl } = configObj;
+
     try {
-      // Parsear metadata y config usando el método heredado
-      const { metadataObj, configObj } = this.parseMetadataAndConfig(
-        metadata,
-        config,
-      );
-      const { id } = metadataObj;
-      const { baseUrl } = configObj;
-
-      // 1. Obtener datos del Digimon
-      const digimonUrl = `${baseUrl}/digimon/${id}`;
-
-      let digimonResponse;
-
-      try {
-        digimonResponse = await axios.get(digimonUrl);
-      } catch (error) {
-        if (error.response) {
-          throw new ExternalApiException(
-            `Digimon API: ${error.response.status} - ${error.response.statusText}`,
-          );
-        }
-
-        throw new ExternalApiException(`Digimon API: ${error.message}`);
-      }
-
-      const digimon = digimonResponse.data;
-
-      // Retornar usando CharacterDto
+      const digimon = await this.fetchDigimon(baseUrl, id);
       return CharacterDto.fromDigimon(digimon);
-    } catch (error) {
-      if (error instanceof ExternalApiException) {
-        throw error;
-      }
-      throw new ExternalApiException(`Digimon API: ${error.message}`);
+    } catch (error: any) {
+      throw new ExternalApiException(this.formatErrorMessage(error));
     }
+  }
+
+  private async fetchDigimon(baseUrl: string, id: string | number) {
+    const url = `${baseUrl}/${this.franchise}/${id}`;
+    const { data } = await axios.get(url);
+    return data;
+  }
+
+  private formatErrorMessage(error: any): string {
+    return error?.response
+      ? `Digimon API: ${error.response.status} - ${error.response.statusText}`
+      : `Digimon API: ${error.message}`;
   }
 }

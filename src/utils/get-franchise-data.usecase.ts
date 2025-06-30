@@ -1,6 +1,6 @@
-import { StoragePort } from 'src/domain/ports/storage-port';
-import { ApiPort } from '../../domain/ports/api-port';
-import { CharacterDto } from '../../domain/dto/character.dto';
+import { ApiPort } from 'src/modules/common/ports/api-port';
+import { CharacterDto } from '../modules/common/models/dto/character.dto';
+import { StoragePort } from '../modules/storage/domain/ports/storage-port';
 
 export class GetFranchiseDataUseCase {
   constructor(
