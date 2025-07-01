@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query, Inject } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -12,16 +12,18 @@ import {
   CharacterResponseDto,
   CharacterMapper,
 } from 'src/modules/common/models/dto/character.dto';
-import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 import { ValidateConfigPipe } from 'src/shared/pipes/config/validate-config.pipe';
 import { ValidateDigimonMetadataPipe } from 'src/shared/pipes/metadata/validate-digimon-metadata.pipe';
+import { DigimonInputPort } from 'src/modules/digimon/domain/ports/digimon-input-port';
+import { INJECTION_TOKENS } from 'src/config/injection-tokens.config';
 
 @ApiTags(routesV1.api.digimon.apiTag)
 @Controller(routesV1.api.digimon.root)
 export class DigimonController {
   constructor(
-    private readonly getCharacterDataUseCase: GetCharacterDataUseCase,
+    @Inject(INJECTION_TOKENS.DIGIMON_INPUT_PORT)
+    private readonly digimonInputPort: DigimonInputPort,
   ) {}
 
   @Get(routesV1.api.digimon.findOne)
@@ -60,7 +62,7 @@ export class DigimonController {
     @Query('metadata', ValidateDigimonMetadataPipe) metadata: any,
     @Query('config', ValidateConfigPipe) config: any,
   ) {
-    const characterEntityDto = await this.getCharacterDataUseCase.execute(
+    const characterEntityDto = await this.digimonInputPort.execute(
       routesV1.version,
       metadata,
       config,

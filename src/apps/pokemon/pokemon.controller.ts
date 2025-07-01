@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query, Inject } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -12,16 +12,18 @@ import {
   CharacterResponseDto,
   CharacterMapper,
 } from 'src/modules/common/models/dto/character.dto';
-import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 import { ValidateConfigPipe } from 'src/shared/pipes/config/validate-config.pipe';
 import { ValidatePokemonMetadataPipe } from 'src/shared/pipes/metadata/validate-pokemon-metadata.pipe';
+import { PokemonInputPort } from 'src/modules/pokemon/domain/ports/pokemon-input-port';
+import { INJECTION_TOKENS } from 'src/config/injection-tokens.config';
 
 @ApiTags(routesV1.api.pokemon.apiTag)
 @Controller(routesV1.api.pokemon.root)
 export class PokemonController {
   constructor(
-    private readonly getCharacterDataUseCase: GetCharacterDataUseCase,
+    @Inject(INJECTION_TOKENS.POKEMON_INPUT_PORT)
+    private readonly pokemonInputPort: PokemonInputPort,
   ) {}
 
   @Get(routesV1.api.pokemon.findOne)
@@ -61,7 +63,7 @@ export class PokemonController {
     @Query('metadata', ValidatePokemonMetadataPipe) metadata: any,
     @Query('config', ValidateConfigPipe) config: any,
   ) {
-    const characterEntityDto = await this.getCharacterDataUseCase.execute(
+    const characterEntityDto = await this.pokemonInputPort.execute(
       routesV1.version,
       metadata,
       config,
