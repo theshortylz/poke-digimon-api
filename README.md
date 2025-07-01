@@ -35,17 +35,21 @@ src/
 │   │   ├── domain/
 │   │   ├── application/
 │   │   └── infrastructure/
-│   └── storage/                    # Storage Module
-│       ├── domain/
-│       │   └── models/
-│       │       └── entities/
-│       │           └── character.entity.ts
-│       └── infraestructure/
-│           └── adapters/
-│               └── storage.adapter.ts
+│   ├── storage/                    # Storage Module
+│   │   ├── domain/
+│   │   │   └── models/
+│   │   │       └── entities/
+│   │   │           └── character.entity.ts
+│   │   └── infraestructure/
+│   │       └── adapters/
+│   │           └── storage.adapter.ts
+│   └── redis/                      # Redis Cache Module
+│       ├── redis-cache.service.ts
+│       └── redis-cache.module.ts
 ├── shared/                         # Shared components
 │   ├── enums/
 │   ├── constants/
+│   │   └── cache-keys.ts          # Centralized cache keys and TTL
 │   └── errors/
 └── apps/                           # API Controllers
     ├── pokemon/
@@ -62,13 +66,57 @@ src/
 - **GET** `/api/digimon/v1/find-digimon` - Get Digimon information
 
 ### Storage
-- **GET** `/api/storage/v1/find-all-storage` - Get query history
+- **GET** `/api/storage/v1/find-all-storage` - Get query history (with Redis caching)
 
 ## 📦 Installation
 
 ### Prerequisites
 - Node.js (version 16 or higher)
 - npm or yarn
+- **Redis** (required for caching functionality)
+
+### Redis Setup
+
+This application uses Redis for caching to improve performance. You need to have Redis running before starting the application.
+
+#### Option 1: Using Docker (Recommended)
+```bash
+# Start Redis container
+docker run --name redis-cache -p 6379:6379 -d redis:alpine
+
+# Verify Redis is running
+docker ps
+
+# For future sessions, just start the existing container
+docker start redis-cache
+```
+
+#### Option 2: Install Redis locally
+```bash
+# Windows (using Chocolatey)
+choco install redis-64
+redis-server
+
+# macOS (using Homebrew)
+brew install redis
+brew services start redis
+
+# Linux (Ubuntu/Debian)
+sudo apt update
+sudo apt install redis-server
+sudo systemctl start redis-server
+```
+
+#### Option 3: Using WSL2 (Windows)
+```bash
+# Install WSL2 if not already installed
+wsl --install
+
+# In WSL2 terminal
+sudo apt update
+sudo apt install redis-server
+sudo service redis-server start
+```
 
 ### Installation Steps
 
@@ -92,7 +140,9 @@ cp .env.example .env
 # .env.example
 
 PORT = 3000
-DB_NAME=digi-pokemon.sqlite
+DB_NAME=my-database.sqlite
+REDIS_HOST=redishost
+REDIS_PORT=6379
 
 ## 🏃‍♂️ Execution
 
@@ -164,6 +214,7 @@ http://localhost:3000/api-docs
 - **TypeScript**: Typed programming language
 - **TypeORM**: ORM for database management
 - **SQLite**: Local database
+- **Redis**: In-memory data structure store for caching
 - **Swagger**: Automatic API documentation
 - **Axios**: HTTP client for external API calls
 
@@ -180,6 +231,10 @@ http://localhost:3000/api-docs
 ### Storage Features
 
 - **Persistence**: All results are stored in SQLite
+- **Redis Caching**: Performance optimization with Redis cache
+  - **Cache Strategy**: Cache-aside pattern for read operations
+  - **TTL**: 5 minutes for storage queries
+  - **Automatic Invalidation**: Cache is cleared when new data is saved
 - **Auditing**: Each query records:
   - `franchise`: `pokemon` or `digimon`
   - `version`: version of the query excecuted
@@ -189,6 +244,23 @@ http://localhost:3000/api-docs
   - `timestamp`: Date and time of the query
 - **UUID**: Unique identifiers for each record
 - **History**: Complete query of all operations
+
+### Cache Configuration
+
+The application uses centralized cache keys and TTL configuration:
+
+```typescript
+// src/shared/constants/cache-keys.ts
+export const CACHE_KEYS = {
+  STORAGE: {
+    ALL_DATA: {
+      key: 'storage:all-data',
+      ttl: 300, // 5 minutes
+    },
+  },
+  // Future modules can be added here
+};
+```
 
 ### Storage Structure
 
@@ -251,11 +323,12 @@ curl -X GET "http://localhost:3000/api/storage/v1/find-all-storage" \
 
 ## 📝 Important Notes
 
-1. **JSON Encoding**: The `metadata` and `config` parameters must be properly URL-encoded
-2. **Rate Limiting**: Respect the limits of external APIs
-3. **Cache**: Results are automatically stored for auditing
-4. **Versioning**: Versioned API for future compatibility
-5. **Documentation**: Always consult Swagger for the most up-to-date documentation
+1. **Redis Requirement**: Redis must be running before starting the application
+2. **JSON Encoding**: The `metadata` and `config` parameters must be properly URL-encoded
+3. **Rate Limiting**: Respect the limits of external APIs
+4. **Cache**: Results are automatically stored for auditing and cached for performance
+5. **Versioning**: Versioned API for future compatibility
+6. **Documentation**: Always consult Swagger for the most up-to-date documentation
 
 ## 📝 License
 
