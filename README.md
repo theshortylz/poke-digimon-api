@@ -154,18 +154,7 @@ REDIS_PORT=6379
 
 ## 🏃‍♂️ Execution
 
-### Development
-```bash
-npm run start:dev
-```
-
-### Production
-```bash
-npm run build
-npm run start:prod
-```
-
-### Generate Migrations
+### Generate Migrations (only if there are no previous migrations)
 ```bash
 npm run migration:generate src/database/migrations/${MigrationName}
 ```
@@ -173,6 +162,17 @@ npm run migration:generate src/database/migrations/${MigrationName}
 ### Run Migrations
 ```bash
 npm run migration:run
+```
+
+### Development
+```bash
+npm run start:dev
+```
+
+### Production (needs to be configured)
+```bash
+npm run build
+npm run start:prod
 ```
 
 ### Start with Tests (Recommended)
