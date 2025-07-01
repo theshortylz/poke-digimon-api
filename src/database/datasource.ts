@@ -14,7 +14,7 @@ export const dataSourceOptions: DataSourceOptions = {
   entities: [CharacterEntity],
   migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
   synchronize: false,
-  logging: true,
+  logging: false,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
