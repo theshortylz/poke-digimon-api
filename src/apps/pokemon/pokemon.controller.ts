@@ -12,13 +12,13 @@ import {
   CharacterResponseDto,
   CharacterMapper,
 } from 'src/modules/common/models/dto/character.dto';
-import { GetPokemonDataUseCase } from 'src/modules/pokemon/application/use-cases/get-pokemon-data.usecase';
+import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
 @ApiTags(routesV1.api.pokemon.apiTag)
 @Controller(routesV1.api.pokemon.root)
 export class PokemonController {
-  constructor(private readonly getPokemonDataUseCase: GetPokemonDataUseCase) {}
+  constructor(private readonly getCharacterDataUseCase: GetCharacterDataUseCase) {}
 
   @Get(routesV1.api.pokemon.findOne)
   @ApiOperation({
@@ -57,7 +57,7 @@ export class PokemonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    const characterEntityDto = await this.getPokemonDataUseCase.execute(
+    const characterEntityDto = await this.getCharacterDataUseCase.execute(
       routesV1.version,
       metadata,
       config,

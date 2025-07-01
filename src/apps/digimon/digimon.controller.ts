@@ -12,13 +12,13 @@ import {
   CharacterResponseDto,
   CharacterMapper,
 } from 'src/modules/common/models/dto/character.dto';
-import { GetDigimonDataUseCase } from 'src/modules/digimon/application/use-cases/get-digimon-data.usecase';
+import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
 @ApiTags(routesV1.api.digimon.apiTag)
 @Controller(routesV1.api.digimon.root)
 export class DigimonController {
-  constructor(private readonly getDigimonDataUseCase: GetDigimonDataUseCase) {}
+  constructor(private readonly getCharacterDataUseCase: GetCharacterDataUseCase) {}
 
   @Get(routesV1.api.digimon.findOne)
   @ApiOperation({
@@ -56,7 +56,7 @@ export class DigimonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    const characterEntityDto = await this.getDigimonDataUseCase.execute(
+    const characterEntityDto = await this.getCharacterDataUseCase.execute(
       routesV1.version,
       metadata,
       config,
