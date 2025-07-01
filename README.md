@@ -145,10 +145,12 @@ cp .env.example .env
 
 # .env.example
 
+```
 PORT = 3000
 DB_NAME=my-database.sqlite
 REDIS_HOST=redishost
 REDIS_PORT=6379
+```
 
 ## 🏃‍♂️ Execution
 
