@@ -48,11 +48,9 @@ export class DigimonController {
     type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
-    status: HttpStatus.BAD_REQUEST,
     description: 'Invalid parameters',
   })
   @ApiServiceUnavailableResponse({
-    status: HttpStatus.SERVICE_UNAVAILABLE,
     description: 'External API unavailable',
   })
   @ApiInternalServerErrorResponse({

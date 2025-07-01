@@ -48,15 +48,12 @@ export class PokemonController {
     type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
-    status: HttpStatus.BAD_REQUEST,
     description: 'Invalid parameters',
   })
   @ApiServiceUnavailableResponse({
-    status: HttpStatus.SERVICE_UNAVAILABLE,
     description: 'External API unavailable',
   })
   @ApiInternalServerErrorResponse({
-    status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Internal server error',
   })
   async getPokemonData(
