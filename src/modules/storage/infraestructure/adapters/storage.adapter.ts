@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import { CharacterEntity } from '../../domain/models/entities/character.entity';
 import { StoragePort } from '../../domain/ports/storage-port';
 import { Franchise } from 'src/shared/enums/franchise.enum';
-import { RedisCacheService } from 'src/modules/common/cache/redis-cache.module';
+import { RedisCacheService } from 'src/modules/common/cache/redis-cache.service';
 import { CACHE_KEYS } from 'src/shared/constants/cache-keys';
 
 @Injectable()
