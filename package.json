@@ -25,13 +25,13 @@
     "test-and-start:dev": "npm test && npm run start:dev"
   },
   "dependencies": {
-    "@nestjs/cache-manager": "^2.3.0",
-    "@nestjs/common": "^11.1.3",
-    "@nestjs/config": "^4.0.2",
-    "@nestjs/core": "^11.1.3",
-    "@nestjs/platform-express": "^11.1.3",
-    "@nestjs/swagger": "^11.2.0",
-    "@nestjs/typeorm": "^11.0.0",
+    "@nestjs/cache-manager": "^2.0.0",
+    "@nestjs/common": "^9.4.0",
+    "@nestjs/config": "^2.2.0",
+    "@nestjs/core": "^9.4.0",
+    "@nestjs/platform-express": "^9.4.0",
+    "@nestjs/swagger": "^6.3.0",
+    "@nestjs/typeorm": "^9.0.1",
     "@types/uuid": "^10.0.0",
     "axios": "^1.10.0",
     "cache-manager": "^5.7.6",
@@ -48,9 +48,9 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.7",
+    "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
-    "@nestjs/testing": "^11.1.3",
+    "@nestjs/testing": "^9.4.0",
     "@types/express": "^4.17.13",
     "@types/jest": "29.5.0",
     "@types/node": "18.15.11",
