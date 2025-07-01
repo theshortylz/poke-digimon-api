@@ -15,6 +15,8 @@ import { PokemonApiAdapter } from 'src/modules/pokemon/infrastructure/adapters/p
 import { TypeormStorageAdapter } from 'src/modules/storage/infraestructure/adapters/storage.adapter';
 import { PokemonInputAdapter } from 'src/modules/pokemon/application/adapters/pokemon-input.adapter';
 import { DigimonInputAdapter } from 'src/modules/digimon/application/adapters/digimon-input.adapter';
+import { GetPokemonDataUseCase } from 'src/modules/pokemon/application/use-cases/get-pokemon-data.usecase';
+import { GetDigimonDataUseCase } from 'src/modules/digimon/application/use-cases/get-digimon-data.usecase';
 
 export const DigimonPortProvider = {
   provide: INJECTION_TOKENS.DIGIMON_PORT,
@@ -34,10 +36,16 @@ export const StoragePortProvider = {
 // Input port providers
 export const PokemonInputPortProvider = {
   provide: INJECTION_TOKENS.POKEMON_INPUT_PORT,
-  useClass: PokemonInputAdapter,
+  useFactory: (getPokemonDataUseCase: GetPokemonDataUseCase) => {
+    return new PokemonInputAdapter(getPokemonDataUseCase);
+  },
+  inject: [GetPokemonDataUseCase],
 };
 
 export const DigimonInputPortProvider = {
   provide: INJECTION_TOKENS.DIGIMON_INPUT_PORT,
-  useClass: DigimonInputAdapter,
+  useFactory: (getDigimonDataUseCase: GetDigimonDataUseCase) => {
+    return new DigimonInputAdapter(getDigimonDataUseCase);
+  },
+  inject: [GetDigimonDataUseCase],
 };

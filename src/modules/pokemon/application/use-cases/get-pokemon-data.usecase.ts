@@ -2,10 +2,11 @@ import { PokemonPort } from '../../domain/ports/pokemon-port';
 import { CharacterEntityDto } from '../../../common/models/dto/character.dto';
 import { Franchise } from 'src/shared/enums/franchise.enum';
 import { StoragePort } from 'src/modules/storage/domain/ports/storage-port';
-import { BadRequestException, Inject } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CharacterStatus } from 'src/shared/enums/character-status.enum';
 import { INJECTION_TOKENS } from 'src/config/injection-tokens.config';
 
+@Injectable()
 export class GetPokemonDataUseCase {
   constructor(
     @Inject(INJECTION_TOKENS.POKEMON_PORT)
