@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CharacterStatus } from 'src/shared/enums/character-status.enum';
 
-// DTO para la respuesta de la API (sin campos de auditoría)
+// DTO for API response (without audit fields)
 export class CharacterResponseDto {
   @ApiProperty({
     description: 'Nombre del personaje',
@@ -43,7 +43,7 @@ export class CharacterResponseDto {
   }
 }
 
-// DTO para la entidad de base de datos (con campos de auditoría)
+// DTO for database entity (with audit fields)
 export class CharacterEntityDto {
   @ApiProperty({
     description: 'Nombre del personaje',
@@ -103,9 +103,9 @@ export class CharacterEntityDto {
   }
 }
 
-// Mapper para convertir entre DTOs
+// Mapper to convert between DTOs
 export class CharacterMapper {
-  // Convierte CharacterEntityDto a CharacterResponseDto (elimina campos de auditoría)
+  // Converts CharacterEntityDto to CharacterResponseDto (removes audit fields)
   static toResponseDto(entityDto: CharacterEntityDto): CharacterResponseDto {
     return new CharacterResponseDto(
       entityDto.name,
@@ -115,7 +115,7 @@ export class CharacterMapper {
     );
   }
 
-  // Convierte CharacterResponseDto a CharacterEntityDto (agrega campos de auditoría)
+  // Converts CharacterResponseDto to CharacterEntityDto (adds audit fields)
   static toEntityDto(
     responseDto: CharacterResponseDto,
     status: CharacterStatus = CharacterStatus.SUCCESS,
@@ -131,7 +131,7 @@ export class CharacterMapper {
     );
   }
 
-  // Métodos estáticos para crear DTOs desde datos externos
+  // Static methods to create DTOs from external data
   static fromPokemon(
     pokemonData: any,
     evolutions: string[] = [],

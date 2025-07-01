@@ -1,14 +1,10 @@
-import {
-  Module,
-  Global,
-  DynamicModule,
-} from '@nestjs/common';
+import { Module, Global, DynamicModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as redis from 'redis';
 import { INJECTION_TOKENS } from 'src/config/injection-tokens.config';
 import { RedisCacheService } from './redis-cache.service';
 
-// Módulo de caché Redis
+// Redis cache module
 @Global()
 @Module({})
 export class RedisCacheModule {

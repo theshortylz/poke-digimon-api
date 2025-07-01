@@ -1,8 +1,8 @@
 import { ApiPort } from 'src/modules/common/ports/api-port';
 
-// Puerto específico para Pokémon que extiende la funcionalidad base
-// Usamos extends para ser explícitos sobre la herencia, aunque no agreguemos métodos adicionales
+// Pokémon-specific port that extends base functionality
+// We use extends to be explicit about inheritance, even though we don't add additional methods
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PokemonPort extends ApiPort {
-  // Métodos específicos de Pokémon pueden agregarse aquí si es necesario
+  // Pokémon-specific methods can be added here if needed
 }

@@ -9,7 +9,7 @@ const appConfig = configuration();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Configuración de Swagger
+  // Swagger configuration
   const config = new DocumentBuilder()
     .setTitle(appConfig.swagger.title)
     .setDescription(appConfig.swagger.description)

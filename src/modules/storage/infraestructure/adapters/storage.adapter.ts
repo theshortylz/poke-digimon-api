@@ -39,13 +39,13 @@ export class TypeormStorageAdapter implements StoragePort {
     });
     await this.repo.save(entity);
 
-    // Invalidar el caché cuando se agrega un nuevo registro
+    // Invalidate cache when adding a new record
     await this.redisCacheService.del(CACHE_KEYS.STORAGE.ALL_DATA.key);
   }
 
   async getAll(): Promise<CharacterEntity[]> {
     try {
-      // Intentar obtener datos del caché primero
+      // Try to get data from cache first
       const cachedData = await this.redisCacheService.get(
         CACHE_KEYS.STORAGE.ALL_DATA.key,
       );
@@ -55,14 +55,14 @@ export class TypeormStorageAdapter implements StoragePort {
         return JSON.parse(cachedData);
       }
 
-      // Si no hay datos en caché, consultar la base de datos
+      // If no data in cache, query the database
       const existsStorage = await this.repo.find();
 
       if (existsStorage.length === 0) {
         throw new NotFoundException('No data found on storage');
       }
 
-      // Guardar en caché por 5 minutos
+      // Cache for 5 minutes
       await this.redisCacheService.set(
         CACHE_KEYS.STORAGE.ALL_DATA.key,
         JSON.stringify(existsStorage),

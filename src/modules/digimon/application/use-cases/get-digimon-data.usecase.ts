@@ -21,7 +21,6 @@ export class GetDigimonDataUseCase {
   ): Promise<CharacterEntityDto> {
     const data = await this.digimonPort.getData(metadata, config);
 
-    // Almacenar el resultado
     await this.storage.save(Franchise.DIGIMON, version, metadata, config, data);
 
     if (data.status === CharacterStatus.FAIL) {

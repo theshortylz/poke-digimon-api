@@ -16,7 +16,6 @@ export class GetFranchiseDataUseCase {
   ): Promise<CharacterEntityDto> {
     const data = await this.apiPort.getData(metadata, config);
 
-    // Almacenar el resultado como se requiere en los requisitos
     await this.storagePort.save(franquicia, version, metadata, config, data);
 
     return data;

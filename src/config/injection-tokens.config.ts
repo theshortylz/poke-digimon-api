@@ -1,4 +1,4 @@
-// Tokens de inyección centralizados
+// Centralized injection tokens
 export const INJECTION_TOKENS = {
   DIGIMON_PORT: 'DigimonPort',
   POKEMON_PORT: 'PokemonPort',
@@ -6,7 +6,7 @@ export const INJECTION_TOKENS = {
   REDIS_CLIENT: 'RedisClient',
 };
 
-// Providers centralizados (uno por puerto)
+// Centralized providers (one per port)
 import { DigimonApiAdapter } from 'src/modules/digimon/infrastructure/adapters/digimon-api.adapter';
 import { PokemonApiAdapter } from 'src/modules/pokemon/infrastructure/adapters/pokemon-api.adapter';
 import { TypeormStorageAdapter } from 'src/modules/storage/infraestructure/adapters/storage.adapter';

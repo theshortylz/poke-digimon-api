@@ -1,13 +1,13 @@
-// Versiones de la API
+// API Versions
 const v1 = 'v1';
 
-// Rutas base
+// Base routes
 const api = 'api';
 const pokemon = 'pokemon';
 const digimon = 'digimon';
 const storage = 'storage';
 
-// Estructura centralizada de rutas
+// Centralized routes structure
 export const routesV1 = {
   version: v1,
   api: {
@@ -23,7 +23,7 @@ export const routesV1 = {
       findOne: `/find-digimon`,
     },
     storage: {
-      apiTag: 'Almacenamiento',
+      apiTag: 'Storage',
       root: `${api}/${storage}/${v1}`,
       findAll: `/find-all-storage`,
     },
