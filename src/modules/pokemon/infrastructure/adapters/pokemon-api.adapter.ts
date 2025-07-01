@@ -1,14 +1,15 @@
 import { PokemonPort } from '../../domain/ports/pokemon-port';
 import axios from 'axios';
-import { CharacterDto } from '../../../common/models/dto/character.dto';
+import { CharacterEntityDto, CharacterMapper } from '../../../common/models/dto/character.dto';
 import { ExternalApiException } from 'src/shared/errors/custom-exceptions';
 import { BaseApiAdapter } from 'src/modules/common/adapters/base-api.adapter';
 import { Franchise } from 'src/shared/enums/franchise.enum';
+import { CharacterStatus } from 'src/shared/enums/character-status.enum';
 
 export class PokemonApiAdapter extends BaseApiAdapter implements PokemonPort {
   private readonly franchise = Franchise.POKEMON;
 
-  async getData(metadata: string, config: string): Promise<CharacterDto> {
+  async getData(metadata: string, config: string): Promise<CharacterEntityDto> {
     const { metadataObj, configObj } = this.parseMetadataAndConfig(
       metadata,
       config,
@@ -26,9 +27,19 @@ export class PokemonApiAdapter extends BaseApiAdapter implements PokemonPort {
 
       const evolutions = this.extractEvolutions(evolutionChain.chain);
 
-      return CharacterDto.fromPokemon(pokemon, evolutions);
+      return CharacterMapper.fromPokemon(
+        pokemon,
+        evolutions,
+        CharacterStatus.SUCCESS,
+        null,
+      );
     } catch (error: any) {
-      throw new ExternalApiException(this.formatErrorMessage(error));
+      return CharacterMapper.fromPokemon(
+        { name: name || '', abilities: [], weight: undefined },
+        [],
+        CharacterStatus.FAIL,
+        this.formatErrorMessage(error),
+      );
     }
   }
 

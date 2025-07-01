@@ -8,7 +8,7 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { CharacterDto } from 'src/modules/common/models/dto/character.dto';
+import { CharacterResponseDto, CharacterMapper } from 'src/modules/common/models/dto/character.dto';
 import { GetDigimonDataUseCase } from 'src/modules/digimon/application/use-cases/get-digimon-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
@@ -36,7 +36,7 @@ export class DigimonController {
   @ApiResponse({
     status: 200,
     description: 'Información del Digimon obtenida exitosamente',
-    type: CharacterDto,
+    type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
     description: 'Parámetros inválidos',
@@ -51,10 +51,11 @@ export class DigimonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    return this.getDigimonDataUseCase.execute(
+    const characterEntityDto = await this.getDigimonDataUseCase.execute(
       routesV1.version,
       metadata,
       config,
     );
+    return CharacterMapper.toResponseDto(characterEntityDto);
   }
 }

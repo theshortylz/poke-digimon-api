@@ -8,7 +8,7 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { CharacterDto } from 'src/modules/common/models/dto/character.dto';
+import { CharacterResponseDto, CharacterMapper } from 'src/modules/common/models/dto/character.dto';
 import { GetPokemonDataUseCase } from 'src/modules/pokemon/application/use-cases/get-pokemon-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
@@ -36,7 +36,7 @@ export class PokemonController {
   @ApiResponse({
     status: 200,
     description: 'Información del Pokémon obtenida exitosamente',
-    type: CharacterDto,
+    type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
     description: 'Parámetros inválidos',
@@ -51,10 +51,11 @@ export class PokemonController {
     @Query('metadata') metadata: string,
     @Query('config') config: string,
   ) {
-    return this.getPokemonDataUseCase.execute(
+    const characterEntityDto = await this.getPokemonDataUseCase.execute(
       routesV1.version,
       metadata,
       config,
     );
+    return CharacterMapper.toResponseDto(characterEntityDto);
   }
 }

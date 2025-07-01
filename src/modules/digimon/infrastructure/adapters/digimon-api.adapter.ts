@@ -1,14 +1,15 @@
 import { DigimonPort } from '../../domain/ports/digimon-port';
 import axios from 'axios';
-import { CharacterDto } from '../../../common/models/dto/character.dto';
+import { CharacterEntityDto, CharacterMapper } from '../../../common/models/dto/character.dto';
 import { Franchise } from '../../../../shared/enums/franchise.enum';
 import { ExternalApiException } from 'src/shared/errors/custom-exceptions';
 import { BaseApiAdapter } from 'src/modules/common/adapters/base-api.adapter';
+import { CharacterStatus } from 'src/shared/enums/character-status.enum';
 
 export class DigimonApiAdapter extends BaseApiAdapter implements DigimonPort {
   private readonly franchise = Franchise.DIGIMON;
 
-  async getData(metadata: string, config: string): Promise<CharacterDto> {
+  async getData(metadata: string, config: string): Promise<CharacterEntityDto> {
     const { metadataObj, configObj } = this.parseMetadataAndConfig(
       metadata,
       config,
@@ -19,9 +20,17 @@ export class DigimonApiAdapter extends BaseApiAdapter implements DigimonPort {
 
     try {
       const digimon = await this.fetchDigimon(baseUrl, id);
-      return CharacterDto.fromDigimon(digimon);
+      return CharacterMapper.fromDigimon(
+        digimon,
+        CharacterStatus.SUCCESS,
+        null,
+      );
     } catch (error: any) {
-      throw new ExternalApiException(this.formatErrorMessage(error));
+      return CharacterMapper.fromDigimon(
+        { name: '', skills: [], priorEvolutions: [], nextEvolutions: [] },
+        CharacterStatus.FAIL,
+        this.formatErrorMessage(error),
+      );
     }
   }
 

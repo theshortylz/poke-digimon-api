@@ -1,5 +1,5 @@
-import { CharacterDto } from '../models/dto/character.dto';
+import { CharacterEntityDto } from '../models/dto/character.dto';
 
 export interface ApiPort {
-  getData(metadata: string, config: string): Promise<CharacterDto>;
+  getData(metadata: string, config: string): Promise<CharacterEntityDto>;
 }

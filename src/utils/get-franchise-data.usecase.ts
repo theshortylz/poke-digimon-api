@@ -1,6 +1,6 @@
 import { ApiPort } from 'src/modules/common/ports/api-port';
-import { CharacterDto } from '../modules/common/models/dto/character.dto';
 import { StoragePort } from '../modules/storage/domain/ports/storage-port';
+import { CharacterEntityDto } from 'src/modules/common/models/dto/character.dto';
 
 export class GetFranchiseDataUseCase {
   constructor(
@@ -13,7 +13,7 @@ export class GetFranchiseDataUseCase {
     version: string,
     metadata: any,
     config: any,
-  ): Promise<CharacterDto> {
+  ): Promise<CharacterEntityDto> {
     const data = await this.apiPort.getData(metadata, config);
 
     // Almacenar el resultado como se requiere en los requisitos

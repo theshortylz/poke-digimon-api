@@ -1,5 +1,5 @@
 import { DigimonPort } from '../../domain/ports/digimon-port';
-import { CharacterDto } from '../../../common/models/dto/character.dto';
+import { CharacterEntityDto } from '../../../common/models/dto/character.dto';
 import { Franchise } from '../../../../shared/enums/franchise.enum';
 import { StoragePort } from 'src/modules/storage/domain/ports/storage-port';
 import { Inject } from '@nestjs/common';
@@ -14,7 +14,7 @@ export class GetDigimonDataUseCase {
     version: string,
     metadata: string,
     config: string,
-  ): Promise<CharacterDto> {
+  ): Promise<CharacterEntityDto> {
     const data = await this.digimonPort.getData(metadata, config);
 
     // Almacenar el resultado
