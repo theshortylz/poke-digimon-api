@@ -1,4 +1,4 @@
-# �� Poke-Digimon API
+# 🎮 Poke-Digimon API
 
 REST API for obtaining character information from **Pokémon** and **Digimon** franchises, built with **NestJS** and implementing **Hexagonal Architecture (Clean Architecture)**.
 
@@ -56,13 +56,13 @@ src/
 ## 🚀 Available Endpoints
 
 ### Pokémon
-- **GET** `/api/pokemon/v1` - Get Pokémon information
+- **GET** `/api/pokemon/v1/find-pokemon` - Get Pokémon information
 
 ### Digimon
-- **GET** `/api/digimon/v1` - Get Digimon information
+- **GET** `/api/digimon/v1/find-digimon` - Get Digimon information
 
 ### Storage
-- **GET** `/api/storage/v1/all` - Get query history
+- **GET** `/api/storage/v1/find-all-storage` - Get query history
 
 ## 📦 Installation
 
@@ -88,6 +88,11 @@ npm install
 # Create .env file if it doesn't exist
 cp .env.example .env
 ```
+
+# .env.example
+
+PORT = 3000
+DB_NAME=digi-pokemon.sqlite
 
 ## 🏃‍♂️ Execution
 
@@ -176,6 +181,9 @@ http://localhost:3000/api-docs
 
 - **Persistence**: All results are stored in SQLite
 - **Auditing**: Each query records:
+  - `franchise`: `pokemon` or `digimon`
+  - `version`: version of the query excecuted
+  - `metadata`: metadata used to run the query
   - `status`: `success` or `fail`
   - `errorMessage`: Error message if it fails
   - `timestamp`: Date and time of the query
@@ -237,7 +245,7 @@ curl -X GET "http://localhost:3000/api/digimon/v1" \
 
 ### Query Operation History
 ```bash
-curl -X GET "http://localhost:3000/api/storage/v1/all" \
+curl -X GET "http://localhost:3000/api/storage/v1/find-all-storage" \
   -H "Content-Type: application/json"
 ```
 
@@ -248,14 +256,6 @@ curl -X GET "http://localhost:3000/api/storage/v1/all" \
 3. **Cache**: Results are automatically stored for auditing
 4. **Versioning**: Versioned API for future compatibility
 5. **Documentation**: Always consult Swagger for the most up-to-date documentation
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📝 License
 
