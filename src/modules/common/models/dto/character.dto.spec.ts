@@ -1,4 +1,8 @@
-import { CharacterMapper, CharacterResponseDto, CharacterEntityDto } from './character.dto';
+import {
+  CharacterMapper,
+  CharacterResponseDto,
+  CharacterEntityDto,
+} from './character.dto';
 import { CharacterStatus } from 'src/shared/enums/character-status.enum';
 
 describe('CharacterMapper', () => {
@@ -63,7 +67,11 @@ describe('CharacterMapper', () => {
       const errorMessage = 'Pokemon not found';
 
       // Act
-      const result = CharacterMapper.toEntityDto(responseDto, customStatus, errorMessage);
+      const result = CharacterMapper.toEntityDto(
+        responseDto,
+        customStatus,
+        errorMessage,
+      );
 
       // Assert
       expect(result).toBeInstanceOf(CharacterEntityDto);
@@ -129,7 +137,12 @@ describe('CharacterMapper', () => {
       const errorMessage = 'Pokemon not found';
 
       // Act
-      const result = CharacterMapper.fromPokemon(pokemonData, evolutions, status, errorMessage);
+      const result = CharacterMapper.fromPokemon(
+        pokemonData,
+        evolutions,
+        status,
+        errorMessage,
+      );
 
       // Assert
       expect(result.status).toBe(CharacterStatus.FAIL);
@@ -142,17 +155,9 @@ describe('CharacterMapper', () => {
       // Arrange
       const digimonData = {
         name: 'Agumon',
-        skills: [
-          { skill: 'Pepper Breath' },
-          { skill: 'Sharp Claws' },
-        ],
-        priorEvolutions: [
-          { digimon: 'Botamon' },
-        ],
-        nextEvolutions: [
-          { digimon: 'Greymon' },
-          { digimon: 'SkullGreymon' },
-        ],
+        skills: [{ skill: 'Pepper Breath' }, { skill: 'Sharp Claws' }],
+        priorEvolutions: [{ digimon: 'Botamon' }],
+        nextEvolutions: [{ digimon: 'Greymon' }, { digimon: 'SkullGreymon' }],
       };
 
       // Act
@@ -182,4 +187,4 @@ describe('CharacterMapper', () => {
       expect(result.evolutions).toEqual([]);
     });
   });
-}); 
+});

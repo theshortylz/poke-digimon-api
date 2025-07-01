@@ -15,4 +15,4 @@ describe('ValidatePokemonMetadataPipe', () => {
   it('should throw error if name is missing', () => {
     expect(() => pipe.transform(JSON.stringify({}))).toThrow();
   });
-}); 
+});

@@ -12,4 +12,4 @@ export class PokemonInputAdapter implements PokemonInputPort {
   ): Promise<CharacterEntityDto> {
     return await this.getPokemonDataUseCase.execute(version, metadata, config);
   }
-} 
+}

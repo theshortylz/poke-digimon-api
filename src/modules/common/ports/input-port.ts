@@ -6,4 +6,4 @@ export interface InputPort {
     metadata: any,
     config: any,
   ): Promise<CharacterEntityDto>;
-} 
+}

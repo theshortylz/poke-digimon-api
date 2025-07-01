@@ -95,4 +95,4 @@ describe('TypeormStorageAdapter', () => {
     // Act & Assert
     await expect(adapter.getAll()).rejects.toThrow('No data found on storage');
   });
-}); 
+});

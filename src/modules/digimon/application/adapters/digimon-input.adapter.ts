@@ -12,4 +12,4 @@ export class DigimonInputAdapter implements DigimonInputPort {
   ): Promise<CharacterEntityDto> {
     return await this.getDigimonDataUseCase.execute(version, metadata, config);
   }
-} 
+}

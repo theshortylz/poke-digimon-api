@@ -13,10 +13,16 @@ describe('GetPokemonStrategy', () => {
   });
 
   it('should call port.getData with correct params', async () => {
-    const expected = new CharacterEntityDto('pikachu', ['static'], ['raichu'], 60, CharacterStatus.SUCCESS);
+    const expected = new CharacterEntityDto(
+      'pikachu',
+      ['static'],
+      ['raichu'],
+      60,
+      CharacterStatus.SUCCESS,
+    );
     port.getData.mockResolvedValue(expected);
     const result = await strategy.getData('metadata', 'config');
     expect(port.getData).toHaveBeenCalledWith('metadata', 'config');
     expect(result).toBe(expected);
   });
-}); 
+});

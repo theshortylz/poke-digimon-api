@@ -18,9 +18,16 @@ describe('PokemonApiAdapter', () => {
     // Arrange
     const metadata = JSON.stringify({ name: 'pikachu' });
     const config = JSON.stringify({ baseUrl: 'https://pokeapi.co/api/v2' });
-    const pokemonData = { name: 'pikachu', abilities: [{ ability: { name: 'static' } }], species: { url: 'species-url' }, weight: 60 };
+    const pokemonData = {
+      name: 'pikachu',
+      abilities: [{ ability: { name: 'static' } }],
+      species: { url: 'species-url' },
+      weight: 60,
+    };
     const speciesData = { evolution_chain: { url: 'evolution-chain-url' } };
-    const evolutionChainData = { chain: { evolves_to: [{ species: { name: 'raichu' }, evolves_to: [] }] } };
+    const evolutionChainData = {
+      chain: { evolves_to: [{ species: { name: 'raichu' }, evolves_to: [] }] },
+    };
 
     mockedAxios.get
       .mockResolvedValueOnce({ data: pokemonData })
@@ -43,7 +50,9 @@ describe('PokemonApiAdapter', () => {
     // Arrange
     const metadata = JSON.stringify({ name: 'invalid' });
     const config = JSON.stringify({ baseUrl: 'https://pokeapi.co/api/v2' });
-    mockedAxios.get.mockRejectedValueOnce({ response: { status: 404, statusText: 'Not Found' } });
+    mockedAxios.get.mockRejectedValueOnce({
+      response: { status: 404, statusText: 'Not Found' },
+    });
 
     // Act
     const result = await adapter.getData(metadata, config);
@@ -52,4 +61,4 @@ describe('PokemonApiAdapter', () => {
     expect(result.status).toBe(CharacterStatus.FAIL);
     expect(result.errorMessage).toContain('Pokémon API: 404');
   });
-}); 
+});

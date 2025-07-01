@@ -15,4 +15,4 @@ describe('ValidateDigimonMetadataPipe', () => {
   it('should throw error if id is missing', () => {
     expect(() => pipe.transform(JSON.stringify({}))).toThrow();
   });
-}); 
+});

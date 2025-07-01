@@ -80,4 +80,4 @@ describe('DigimonInputAdapter', () => {
       expect(result.errorMessage).toBe(errorMessage);
     });
   });
-}); 
+});

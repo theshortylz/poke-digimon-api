@@ -127,4 +127,4 @@ describe('GetPokemonDataUseCase', () => {
       expect(storagePort.save).not.toHaveBeenCalled();
     });
   });
-}); 
+});

@@ -13,10 +13,16 @@ describe('GetDigimonStrategy', () => {
   });
 
   it('should call port.getData with correct params', async () => {
-    const expected = new CharacterEntityDto('Agumon', ['Pepper Breath'], ['Greymon'], undefined, CharacterStatus.SUCCESS);
+    const expected = new CharacterEntityDto(
+      'Agumon',
+      ['Pepper Breath'],
+      ['Greymon'],
+      undefined,
+      CharacterStatus.SUCCESS,
+    );
     port.getData.mockResolvedValue(expected);
     const result = await strategy.getData('metadata', 'config');
     expect(port.getData).toHaveBeenCalledWith('metadata', 'config');
     expect(result).toBe(expected);
   });
-}); 
+});

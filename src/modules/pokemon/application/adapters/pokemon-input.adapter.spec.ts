@@ -80,4 +80,4 @@ describe('PokemonInputAdapter', () => {
       expect(result.errorMessage).toBe(errorMessage);
     });
   });
-}); 
+});

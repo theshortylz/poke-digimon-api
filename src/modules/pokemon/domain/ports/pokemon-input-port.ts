@@ -4,4 +4,4 @@ import { InputPort } from 'src/modules/common/ports/input-port';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PokemonInputPort extends InputPort {
   // Pokémon-specific input methods can be added here if needed
-} 
+}

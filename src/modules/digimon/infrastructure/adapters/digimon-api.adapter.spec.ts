@@ -42,7 +42,9 @@ describe('DigimonApiAdapter', () => {
     // Arrange
     const metadata = JSON.stringify({ id: 9999 });
     const config = JSON.stringify({ baseUrl: 'https://digi-api.com/api/v1' });
-    mockedAxios.get.mockRejectedValueOnce({ response: { status: 400, statusText: 'Bad Request' } });
+    mockedAxios.get.mockRejectedValueOnce({
+      response: { status: 400, statusText: 'Bad Request' },
+    });
 
     // Act
     const result = await adapter.getData(metadata, config);
@@ -51,4 +53,4 @@ describe('DigimonApiAdapter', () => {
     expect(result.status).toBe(CharacterStatus.FAIL);
     expect(result.errorMessage).toContain('Digimon API: 400');
   });
-}); 
+});
