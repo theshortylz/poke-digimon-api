@@ -175,6 +175,37 @@ npm run migration:generate src/database/migrations/${MigrationName}
 npm run migration:run
 ```
 
+## 🗄️ Database Setup
+
+### SQLite Database
+
+This project uses SQLite as the local database. The database file is automatically created when you run the migrations.
+
+#### Initial Setup
+```bash
+# Run migrations to create the database and tables
+npm run migration:run
+```
+
+#### Database File Location
+- The database file will be created in the root directory
+- Default name: `digi-pokemon.sqlite` (as configured in your datasource)
+- **Note**: Database files are excluded from Git via `.gitignore`
+
+#### Reset Database (if needed)
+```bash
+# Remove the existing database file
+rm digi-pokemon.sqlite
+
+# Run migrations again to recreate the database
+npm run migration:run
+```
+
+#### Database Schema
+The application creates the following tables:
+- `characters`: Stores character data from Pokémon and Digimon APIs
+- `migrations`: Tracks applied database migrations
+
 ## 📖 API Usage
 
 ### Example: Get Pokémon Information
