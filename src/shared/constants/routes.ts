@@ -15,17 +15,17 @@ export const routesV1 = {
     pokemon: {
       apiTag: 'Pokémon',
       root: `${api}/${pokemon}/${v1}`,
-      getData: `${api}/${pokemon}/${v1}`,
+      findOne: `/find-pokemon`,
     },
     digimon: {
       apiTag: 'Digimon',
       root: `${api}/${digimon}/${v1}`,
-      getData: `${api}/${digimon}/${v1}`,
+      findOne: `/find-digimon`,
     },
     storage: {
       apiTag: 'Almacenamiento',
       root: `${api}/${storage}/${v1}`,
-      getAll: `${api}/${storage}/${v1}/all`,
+      findAll: `/find-all-storage`,
     },
   },
 };

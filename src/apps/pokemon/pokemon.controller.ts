@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -8,7 +8,10 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { CharacterResponseDto, CharacterMapper } from 'src/modules/common/models/dto/character.dto';
+import {
+  CharacterResponseDto,
+  CharacterMapper,
+} from 'src/modules/common/models/dto/character.dto';
 import { GetPokemonDataUseCase } from 'src/modules/pokemon/application/use-cases/get-pokemon-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
@@ -17,35 +20,38 @@ import { routesV1 } from 'src/shared/constants/routes';
 export class PokemonController {
   constructor(private readonly getPokemonDataUseCase: GetPokemonDataUseCase) {}
 
-  @Get()
+  @Get(routesV1.api.pokemon.findOne)
   @ApiOperation({
-    summary: 'Obtener información de un Pokémon',
+    summary: 'Obtain information about a Pokemon',
     description:
-      'Obtiene información detallada de un Pokémon incluyendo poderes y evoluciones.',
+      'Obtains detailed information about a Pokemon including powers and evolutions.',
   })
   @ApiQuery({
     name: 'metadata',
-    description: 'Metadatos del Pokémon (JSON)',
+    description: 'Pokemon metadata (JSON)',
     example: '{"name":"pikachu"}',
   })
   @ApiQuery({
     name: 'config',
-    description: 'Configuración para la API externa (JSON)',
+    description: 'External API configuration (JSON)',
     example: '{"baseUrl":"https://pokeapi.co/api/v2"}',
   })
   @ApiResponse({
     status: 200,
-    description: 'Información del Pokémon obtenida exitosamente',
+    description: 'Pokemon information obtained successfully',
     type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
-    description: 'Parámetros inválidos',
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Invalid parameters',
   })
   @ApiServiceUnavailableResponse({
-    description: 'API externa no disponible',
+    status: HttpStatus.SERVICE_UNAVAILABLE,
+    description: 'External API unavailable',
   })
   @ApiInternalServerErrorResponse({
-    description: 'Error interno del servidor',
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: 'Internal server error',
   })
   async getPokemonData(
     @Query('metadata') metadata: string,

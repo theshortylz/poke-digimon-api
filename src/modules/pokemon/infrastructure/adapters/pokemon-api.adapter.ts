@@ -1,12 +1,16 @@
 import { PokemonPort } from '../../domain/ports/pokemon-port';
 import axios from 'axios';
-import { CharacterEntityDto, CharacterMapper } from '../../../common/models/dto/character.dto';
-import { ExternalApiException } from 'src/shared/errors/custom-exceptions';
+import {
+  CharacterEntityDto,
+  CharacterMapper,
+} from '../../../common/models/dto/character.dto';
 import { BaseApiAdapter } from 'src/modules/common/adapters/base-api.adapter';
 import { Franchise } from 'src/shared/enums/franchise.enum';
 import { CharacterStatus } from 'src/shared/enums/character-status.enum';
+import { Logger } from '@nestjs/common';
 
 export class PokemonApiAdapter extends BaseApiAdapter implements PokemonPort {
+  private readonly logger = new Logger(PokemonApiAdapter.name);
   private readonly franchise = Franchise.POKEMON;
 
   async getData(metadata: string, config: string): Promise<CharacterEntityDto> {
@@ -34,6 +38,11 @@ export class PokemonApiAdapter extends BaseApiAdapter implements PokemonPort {
         null,
       );
     } catch (error: any) {
+      this.logger.error(
+        `An error occurred while getting data from pokemon API: ${error.message}`,
+        error,
+      );
+
       return CharacterMapper.fromPokemon(
         { name: name || '', abilities: [], weight: undefined },
         [],

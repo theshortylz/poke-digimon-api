@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -8,7 +8,10 @@ import {
   ApiServiceUnavailableResponse,
   ApiInternalServerErrorResponse,
 } from '@nestjs/swagger';
-import { CharacterResponseDto, CharacterMapper } from 'src/modules/common/models/dto/character.dto';
+import {
+  CharacterResponseDto,
+  CharacterMapper,
+} from 'src/modules/common/models/dto/character.dto';
 import { GetDigimonDataUseCase } from 'src/modules/digimon/application/use-cases/get-digimon-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
 
@@ -17,32 +20,34 @@ import { routesV1 } from 'src/shared/constants/routes';
 export class DigimonController {
   constructor(private readonly getDigimonDataUseCase: GetDigimonDataUseCase) {}
 
-  @Get()
+  @Get(routesV1.api.digimon.findOne)
   @ApiOperation({
-    summary: 'Obtener información de un Digimon',
+    summary: 'Obtain information about a Digimon',
     description:
-      'Obtiene información detallada de un Digimon incluyendo poderes y evoluciones.',
+      'Obtains detailed information about a Digimon including powers and evolutions.',
   })
   @ApiQuery({
     name: 'metadata',
-    description: 'Metadatos del Digimon (JSON)',
+    description: 'Digimon metadata (JSON)',
     example: '{"id":42}',
   })
   @ApiQuery({
     name: 'config',
-    description: 'Configuración para la API externa (JSON)',
+    description: 'External API configuration (JSON)',
     example: '{"baseUrl":"https://digi-api.com/api/v1"}',
   })
   @ApiResponse({
     status: 200,
-    description: 'Información del Digimon obtenida exitosamente',
+    description: 'Digimon information obtained successfully',
     type: CharacterResponseDto,
   })
   @ApiBadRequestResponse({
-    description: 'Parámetros inválidos',
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Invalid parameters',
   })
   @ApiServiceUnavailableResponse({
-    description: 'API externa no disponible',
+    status: HttpStatus.SERVICE_UNAVAILABLE,
+    description: 'External API unavailable',
   })
   @ApiInternalServerErrorResponse({
     description: 'Error interno del servidor',

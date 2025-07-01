@@ -1,11 +1,13 @@
 export default () => ({
+  swagger: {
+    title: 'API Pokémon And Digimon',
+    description: 'Documentation for the REST API for Pokémon and Digimon',
+    version: '1.0',
+    path: 'api-docs',
+  },
   port: parseInt(process.env.PORT || '3000', 10),
   database: {
-    host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT as string, 10),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    name: process.env.DB_NAME || 'poke_digi.sqlite',
   },
   //   redis: {
   //     host: process.env.REDIS_HOST,

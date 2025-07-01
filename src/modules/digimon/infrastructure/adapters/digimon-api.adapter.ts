@@ -1,12 +1,16 @@
 import { DigimonPort } from '../../domain/ports/digimon-port';
 import axios from 'axios';
-import { CharacterEntityDto, CharacterMapper } from '../../../common/models/dto/character.dto';
+import {
+  CharacterEntityDto,
+  CharacterMapper,
+} from '../../../common/models/dto/character.dto';
 import { Franchise } from '../../../../shared/enums/franchise.enum';
-import { ExternalApiException } from 'src/shared/errors/custom-exceptions';
 import { BaseApiAdapter } from 'src/modules/common/adapters/base-api.adapter';
 import { CharacterStatus } from 'src/shared/enums/character-status.enum';
+import { Logger } from '@nestjs/common';
 
 export class DigimonApiAdapter extends BaseApiAdapter implements DigimonPort {
+  private readonly logger = new Logger(DigimonApiAdapter.name);
   private readonly franchise = Franchise.DIGIMON;
 
   async getData(metadata: string, config: string): Promise<CharacterEntityDto> {
@@ -26,6 +30,11 @@ export class DigimonApiAdapter extends BaseApiAdapter implements DigimonPort {
         null,
       );
     } catch (error: any) {
+      this.logger.error(
+        `An error occurred while getting data from digimon API: ${error.message}`,
+        error,
+      );
+
       return CharacterMapper.fromDigimon(
         { name: '', skills: [], priorEvolutions: [], nextEvolutions: [] },
         CharacterStatus.FAIL,
