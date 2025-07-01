@@ -43,9 +43,15 @@ src/
 │   │   └── infraestructure/
 │   │       └── adapters/
 │   │           └── storage.adapter.ts
-│   └── redis/                      # Redis Cache Module
-│       ├── redis-cache.service.ts
-│       └── redis-cache.module.ts
+│   └── common/                     # Common Module
+│       ├── cache/                  # Redis Cache Module
+│       │   ├── redis-cache.service.ts
+│       │   └── redis-cache.module.ts
+│       ├── adapters/
+│       ├── models/
+│       ├── ports/
+│       ├── strategies/
+│       └── use-cases/
 ├── shared/                         # Shared components
 │   ├── enums/
 │   ├── constants/
