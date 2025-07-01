@@ -14,8 +14,8 @@ import {
 } from 'src/modules/common/models/dto/character.dto';
 import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
-import { ValidateConfigPipe } from 'src/shared/pipes/validate-config.pipe';
-import { ValidatePokemonMetadataPipe } from 'src/shared/pipes/validate-pokemon-metadata.pipe';
+import { ValidateConfigPipe } from 'src/shared/pipes/config/validate-config.pipe';
+import { ValidatePokemonMetadataPipe } from 'src/shared/pipes/metadata/validate-pokemon-metadata.pipe';
 
 @ApiTags(routesV1.api.pokemon.apiTag)
 @Controller(routesV1.api.pokemon.root)
