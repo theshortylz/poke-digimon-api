@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { RedisClientType } from 'redis';
 import { INJECTION_TOKENS } from 'src/config/injection-tokens.config';
 

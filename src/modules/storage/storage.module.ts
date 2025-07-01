@@ -7,9 +7,13 @@ import {
   StoragePortProvider,
   INJECTION_TOKENS,
 } from 'src/config/injection-tokens.config';
+import { RedisCacheModule } from 'src/modules/common/cache/redis-cache.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CharacterEntity])],
+  imports: [
+    TypeOrmModule.forFeature([CharacterEntity]),
+    RedisCacheModule.register(),
+  ],
   providers: [StoragePortProvider, TypeormStorageAdapter],
   exports: [INJECTION_TOKENS.STORAGE_PORT],
 })
