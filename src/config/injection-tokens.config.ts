@@ -3,6 +3,7 @@ export const INJECTION_TOKENS = {
   DIGIMON_PORT: 'DigimonPort',
   POKEMON_PORT: 'PokemonPort',
   STORAGE_PORT: 'StoragePort',
+  REDIS_CLIENT: 'RedisClient',
 };
 
 // Providers centralizados (uno por puerto)

@@ -5,6 +5,7 @@ import { StorageController } from './apps/storage/storage.controller';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { StorageModule } from './modules/storage/storage.module';
+import { RedisCacheModule } from './modules/common/cache/redis-cache.module';
 import configuration from './config/app.config';
 
 @Module({
@@ -13,7 +14,7 @@ import configuration from './config/app.config';
       isGlobal: true,
       load: [configuration],
     }),
-
+    RedisCacheModule.register(),
     PokemonModule,
     DigimonModule,
     DatabaseModule,

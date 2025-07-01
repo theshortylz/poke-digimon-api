@@ -9,8 +9,8 @@ export default () => ({
   database: {
     name: process.env.DB_NAME || 'poke_digi.sqlite',
   },
-  //   redis: {
-  //     host: process.env.REDIS_HOST,
-  //     port: parseInt(process.env.REDIS_PORT as string, 10),
-  //   },
+  redis: {
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379', 10),
+  },
 });
