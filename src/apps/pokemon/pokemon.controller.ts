@@ -14,11 +14,15 @@ import {
 } from 'src/modules/common/models/dto/character.dto';
 import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
+import { ValidateConfigPipe } from 'src/shared/pipes/validate-config.pipe';
+import { ValidatePokemonMetadataPipe } from 'src/shared/pipes/validate-pokemon-metadata.pipe';
 
 @ApiTags(routesV1.api.pokemon.apiTag)
 @Controller(routesV1.api.pokemon.root)
 export class PokemonController {
-  constructor(private readonly getCharacterDataUseCase: GetCharacterDataUseCase) {}
+  constructor(
+    private readonly getCharacterDataUseCase: GetCharacterDataUseCase,
+  ) {}
 
   @Get(routesV1.api.pokemon.findOne)
   @ApiOperation({
@@ -54,8 +58,8 @@ export class PokemonController {
     description: 'Internal server error',
   })
   async getPokemonData(
-    @Query('metadata') metadata: string,
-    @Query('config') config: string,
+    @Query('metadata', ValidatePokemonMetadataPipe) metadata: any,
+    @Query('config', ValidateConfigPipe) config: any,
   ) {
     const characterEntityDto = await this.getCharacterDataUseCase.execute(
       routesV1.version,

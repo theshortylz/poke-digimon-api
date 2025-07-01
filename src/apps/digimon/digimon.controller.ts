@@ -14,11 +14,15 @@ import {
 } from 'src/modules/common/models/dto/character.dto';
 import { GetCharacterDataUseCase } from 'src/modules/common/use-cases/get-character-data.usecase';
 import { routesV1 } from 'src/shared/constants/routes';
+import { ValidateConfigPipe } from 'src/shared/pipes/validate-config.pipe';
+import { ValidateDigimonMetadataPipe } from 'src/shared/pipes/validate-digimon-metadata.pipe';
 
 @ApiTags(routesV1.api.digimon.apiTag)
 @Controller(routesV1.api.digimon.root)
 export class DigimonController {
-  constructor(private readonly getCharacterDataUseCase: GetCharacterDataUseCase) {}
+  constructor(
+    private readonly getCharacterDataUseCase: GetCharacterDataUseCase,
+  ) {}
 
   @Get(routesV1.api.digimon.findOne)
   @ApiOperation({
@@ -53,8 +57,8 @@ export class DigimonController {
     description: 'Error interno del servidor',
   })
   async getDigimonData(
-    @Query('metadata') metadata: string,
-    @Query('config') config: string,
+    @Query('metadata', ValidateDigimonMetadataPipe) metadata: any,
+    @Query('config', ValidateConfigPipe) config: any,
   ) {
     const characterEntityDto = await this.getCharacterDataUseCase.execute(
       routesV1.version,
