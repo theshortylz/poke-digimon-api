@@ -1,41 +1,41 @@
-# 🎮 Poke-Digimon API
+# �� Poke-Digimon API
 
-API REST para obtener información de personajes de las franquicias **Pokémon** y **Digimon**, construida con **NestJS** e implementando **Arquitectura Hexagonal (Clean Architecture)**.
+REST API for obtaining character information from **Pokémon** and **Digimon** franchises, built with **NestJS** and implementing **Hexagonal Architecture (Clean Architecture)**.
 
-## 📋 Descripción
+## 📋 Description
 
-Esta API permite consultar información detallada de personajes de Pokémon y Digimon, incluyendo sus poderes, evoluciones y características. La aplicación está diseñada con una arquitectura modular que permite escalabilidad y mantenibilidad.
+This API allows you to query detailed information about Pokémon and Digimon characters, including their powers, evolutions, and characteristics. The application is designed with a modular architecture that enables scalability and maintainability.
 
-## 🏗️ Arquitectura Implementada
+## 🏗️ Implemented Architecture
 
-### Arquitectura Hexagonal (Clean Architecture)
+### Hexagonal Architecture (Clean Architecture)
 
-El proyecto implementa **Arquitectura Hexagonal** con las siguientes capas:
+The project implements **Hexagonal Architecture** with the following layers:
 
-- **🏛️ Dominio**: Entidades y reglas de negocio
-- **📱 Aplicación**: Casos de uso y lógica de aplicación
-- **🔌 Infraestructura**: Adaptadores, controladores y acceso a datos externos
+- **🏛️ Domain**: Entities and business rules
+- **📱 Application**: Use cases and application logic
+- **🔌 Infrastructure**: Adapters, controllers, and external data access
 
-### Estructura del Proyecto
+### Project Structure
 
 ```
 src/
 ├── modules/
-│   ├── pokemon/                    # Módulo de Pokémon
-│   │   ├── domain/                 # Entidades y puertos
+│   ├── pokemon/                    # Pokémon Module
+│   │   ├── domain/                 # Entities and ports
 │   │   │   └── ports/
 │   │   │       └── pokemon-port.ts
-│   │   ├── application/            # Casos de uso
+│   │   ├── application/            # Use cases
 │   │   │   └── use-cases/
 │   │   │       └── get-pokemon-data.usecase.ts
-│   │   └── infrastructure/         # Adaptadores y controladores
+│   │   └── infrastructure/         # Adapters and controllers
 │   │       └── adapters/
 │   │           └── pokemon-api.adapter.ts
-│   ├── digimon/                    # Módulo de Digimon
+│   ├── digimon/                    # Digimon Module
 │   │   ├── domain/
 │   │   ├── application/
 │   │   └── infrastructure/
-│   └── storage/                    # Módulo de almacenamiento
+│   └── storage/                    # Storage Module
 │       ├── domain/
 │       │   └── models/
 │       │       └── entities/
@@ -43,84 +43,84 @@ src/
 │       └── infraestructure/
 │           └── adapters/
 │               └── storage.adapter.ts
-├── shared/                         # Componentes compartidos
+├── shared/                         # Shared components
 │   ├── enums/
 │   ├── constants/
 │   └── errors/
-└── apps/                           # Controladores de la API
+└── apps/                           # API Controllers
     ├── pokemon/
     ├── digimon/
     └── storage/
 ```
 
-## 🚀 Endpoints Disponibles
+## 🚀 Available Endpoints
 
 ### Pokémon
-- **GET** `/api/pokemon/v1` - Obtener información de un Pokémon
+- **GET** `/api/pokemon/v1` - Get Pokémon information
 
 ### Digimon
-- **GET** `/api/digimon/v1` - Obtener información de un Digimon
+- **GET** `/api/digimon/v1` - Get Digimon information
 
-### Almacenamiento
-- **GET** `/api/storage/v1/all` - Obtener historial de consultas
+### Storage
+- **GET** `/api/storage/v1/all` - Get query history
 
-## 📦 Instalación
+## 📦 Installation
 
-### Prerrequisitos
-- Node.js (versión 16 o superior)
-- npm o yarn
+### Prerequisites
+- Node.js (version 16 or higher)
+- npm or yarn
 
-### Pasos de instalación
+### Installation Steps
 
-1. **Clonar el repositorio**
+1. **Clone the repository**
 ```bash
-git clone <url-del-repositorio>
+git clone <repository-url>
 cd poke-digimon-api
 ```
 
-2. **Instalar dependencias**
+2. **Install dependencies**
 ```bash
 npm install
 ```
 
-3. **Configurar variables de entorno** (si es necesario)
+3. **Configure environment variables** (if needed)
 ```bash
-# Crear archivo .env si no existe
+# Create .env file if it doesn't exist
 cp .env.example .env
 ```
 
-## 🏃‍♂️ Ejecución
+## 🏃‍♂️ Execution
 
-### Desarrollo
+### Development
 ```bash
 npm run start:dev
 ```
 
-### Producción
+### Production
 ```bash
 npm run build
 npm run start:prod
 ```
 
-### Generar migraciones
+### Generate Migrations
 ```bash
-npm run migration:generate src/database/migrations/${Nombre de la migración}
+npm run migration:generate src/database/migrations/${MigrationName}
 ```
 
-### Ejecutar migraciones
+### Run Migrations
 ```bash
 npm run migration:run
 ```
 
-## 📖 Uso de la API
+## 📖 API Usage
 
-### Ejemplo: Obtener información de un Pokémon
+### Example: Get Pokémon Information
 
 ```bash
 curl "http://localhost:3000/api/pokemon/v1?metadata={\"name\":\"pikachu\"}&config={\"baseUrl\":\"https://pokeapi.co/api/v2\"}"
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "name": "pikachu",
@@ -130,13 +130,13 @@ curl "http://localhost:3000/api/pokemon/v1?metadata={\"name\":\"pikachu\"}&confi
 }
 ```
 
-### Ejemplo: Obtener información de un Digimon
+### Example: Get Digimon Information
 
 ```bash
 curl "http://localhost:3000/api/digimon/v1?metadata={\"id\":42}&config={\"baseUrl\":\"https://digi-api.com/api/v1\"}"
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "name": "Agumon",
@@ -145,31 +145,126 @@ curl "http://localhost:3000/api/digimon/v1?metadata={\"id\":42}&config={\"baseUr
 }
 ```
 
-## 📚 Documentación API
+## 📚 API Documentation
 
-Una vez ejecutada la aplicación, accede a la documentación interactiva de Swagger:
+Once the application is running, access the interactive Swagger documentation:
 
 ```
 http://localhost:3000/api-docs
 ```
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
-- **NestJS**: Framework para aplicaciones Node.js escalables
-- **TypeScript**: Lenguaje de programación tipado
-- **TypeORM**: ORM para manejo de base de datos
-- **SQLite**: Base de datos local
-- **Swagger**: Documentación automática de la API
-- **Axios**: Cliente HTTP para llamadas a APIs externas
+- **NestJS**: Framework for scalable Node.js applications
+- **TypeScript**: Typed programming language
+- **TypeORM**: ORM for database management
+- **SQLite**: Local database
+- **Swagger**: Automatic API documentation
+- **Axios**: HTTP client for external API calls
 
-## 🏛️ Beneficios de la Arquitectura
+## 🏛️ Architecture Benefits
 
-1. **🔧 Mantenibilidad**: Código organizado y fácil de mantener
-2. **🧪 Testabilidad**: Cada módulo puede ser testeado de forma aislada
-3. **📈 Escalabilidad**: Módulos independientes que pueden crecer por separado
-4. **🔄 Reutilización**: Componentes compartidos entre módulos
-5. **🚀 Despliegue Independiente**: Posibilidad de desplegar módulos por separado
+1. **🔧 Maintainability**: Organized and easy-to-maintain code
+2. **🧪 Testability**: Each module can be tested in isolation
+3. **📈 Scalability**: Independent modules that can grow separately
+4. **🔄 Reusability**: Shared components between modules
+5. **🚀 Independent Deployment**: Possibility to deploy modules separately
 
-## 📝 Licencia
+## 💾 Storage and Auditing
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+### Storage Features
+
+- **Persistence**: All results are stored in SQLite
+- **Auditing**: Each query records:
+  - `status`: `success` or `fail`
+  - `errorMessage`: Error message if it fails
+  - `timestamp`: Date and time of the query
+- **UUID**: Unique identifiers for each record
+- **History**: Complete query of all operations
+
+### Storage Structure
+
+```json
+{
+  "id": "uuid",
+  "franchise": "pokemon|digimon",
+  "version": "v1",
+  "metadata": "JSON string",
+  "config": "JSON string", 
+  "status": "success|fail",
+  "errorMessage": "string|null",
+  "timestamp": "ISO 8601"
+}
+```
+
+## 🎯 Special Features
+
+### Pokémon
+- **Automatic evolutions**: Obtained from the complete evolutionary chain
+- **Powers**: Abilities and special characteristics
+- **Weight**: Physical information of the Pokémon
+
+### Digimon
+- **Evolutions**: Previous and next evolutions
+- **Powers**: Abilities and special attacks
+- **Flexibility**: Support for different types of Digimon
+
+### General
+- **Strict validation**: Only accepts valid franchises
+- **Robust error handling**: Specific errors with appropriate HTTP codes
+- **Automatic documentation**: Swagger with examples and types
+- **Scalable architecture**: Independent and reusable modules
+
+## 🚀 Complete Usage Examples
+
+### Get Pikachu Information
+```bash
+curl -X GET "http://localhost:3000/api/pokemon/v1" \
+  -H "Content-Type: application/json" \
+  -G \
+  -d "metadata={\"name\":\"pikachu\"}" \
+  -d "config={\"baseUrl\":\"https://pokeapi.co/api/v2\"}"
+```
+
+### Get Agumon Information
+```bash
+curl -X GET "http://localhost:3000/api/digimon/v1" \
+  -H "Content-Type: application/json" \
+  -G \
+  -d "metadata={\"id\":42}" \
+  -d "config={\"baseUrl\":\"https://digi-api.com/api/v1\"}"
+```
+
+### Query Operation History
+```bash
+curl -X GET "http://localhost:3000/api/storage/v1/all" \
+  -H "Content-Type: application/json"
+```
+
+## 📝 Important Notes
+
+1. **JSON Encoding**: The `metadata` and `config` parameters must be properly URL-encoded
+2. **Rate Limiting**: Respect the limits of external APIs
+3. **Cache**: Results are automatically stored for auditing
+4. **Versioning**: Versioned API for future compatibility
+5. **Documentation**: Always consult Swagger for the most up-to-date documentation
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is under the MIT License. See the `LICENSE` file for more details.
+
+## 📞 Contact
+
+If you have any questions or suggestions, feel free to open an issue in the repository.
+
+---
+
+**For more information, consult the interactive documentation at:** `http://localhost:3000/api-docs`
