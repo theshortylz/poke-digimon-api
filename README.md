@@ -175,6 +175,20 @@ npm run migration:generate src/database/migrations/${MigrationName}
 npm run migration:run
 ```
 
+### Start with Tests (Recommended)
+
+To ensure code quality, you can start the development server only if all unit tests pass:
+
+```bash
+npm run test-and-start:dev
+```
+
+- This script will run all unit tests first.
+- If all tests pass (100%), the server will start in development mode.
+- If any test fails, the server will **not** start.
+
+This helps maintain a robust and reliable codebase during development.
+
 ## 🗄️ Database Setup
 
 ### SQLite Database
