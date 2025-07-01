@@ -15,6 +15,8 @@ import { CACHE_KEYS } from 'src/shared/constants/cache-keys';
 
 @Injectable()
 export class TypeormStorageAdapter implements StoragePort {
+  private readonly logger = new Logger(TypeormStorageAdapter.name);
+
   constructor(
     @InjectRepository(CharacterEntity)
     private readonly repo: Repository<CharacterEntity>,
@@ -51,7 +53,7 @@ export class TypeormStorageAdapter implements StoragePort {
       );
 
       if (cachedData) {
-        Logger.log('Data retrieved from cache');
+        this.logger.log('Data retrieved from cache');
         return JSON.parse(cachedData);
       }
 
@@ -69,7 +71,7 @@ export class TypeormStorageAdapter implements StoragePort {
         CACHE_KEYS.STORAGE.ALL_DATA.ttl,
       );
 
-      Logger.log('Data retrieved from database and cached');
+      this.logger.log('Data retrieved from database and cached');
 
       return existsStorage;
     } catch (error) {
@@ -77,7 +79,7 @@ export class TypeormStorageAdapter implements StoragePort {
         throw error;
       }
 
-      Logger.error(
+      this.logger.error(
         `An error occurred while getting all data from storage: ${error.message}`,
         error,
       );
